@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "color-emoji",
+  "version": "${version}",
+  "name": "Color Emoji",
+  "description": "Full-color emoji in chat, signs, item names, and other Minecraft text.",
+  "authors": ["Merkie"],
+  "contact": {
+    "sources": "https://github.com/Merkie/color-emoji",
+    "issues": "https://github.com/Merkie/color-emoji/issues"
+  },
+  "license": "All-Rights-Reserved",
+  "environment": "client",
+  "mixins": ["color-emoji.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "26.2",
+    "java": ">=25"
+  }
+}
