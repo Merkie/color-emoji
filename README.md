@@ -3,7 +3,7 @@
 A standalone, client-only Fabric mod for **Minecraft 26.2** that draws emoji
 in full color using Apple's emoji artwork.
 
-![Color emoji in styled text and a named pickaxe tooltip](docs/images/preview.png)
+![Color emoji in Minecraft chat](docs/images/chat.png)
 
 Emoji work in chat, signs, named items, tooltips, and other text using
 Minecraft's default font. Skin tones (👍🏽), flags (🇺🇸), families (👨‍👩‍👧),
@@ -27,7 +27,9 @@ requests. Only one version of Color Emoji should be installed at a time.
 Custom resource-pack fonts that replace the default font's Unicode fallback
 may override emoji rendering.
 
-![Full-color emoji in Minecraft's sign editor](docs/images/sign.png)
+![Full-color emoji on a sign in a Minecraft garden](docs/images/sign.png)
+
+![A named diamond pickaxe with color emoji in its inventory tooltip](docs/images/item.png)
 
 ## Build and test
 
@@ -44,7 +46,9 @@ widths, unchanged text, chat, sign editing, and named-item tooltips.
 
 The installable JAR is `build/libs/color-emoji-1.0.0+26.2.jar`. The
 `-sources.jar` is for development. Fabric API is used only by the test harness.
-Screenshots are saved under `build/run/clientGameTest/screenshots/`.
+Screenshots are saved under `build/run/clientGameTest/screenshots/`. The
+`showcase-chat.png`, `showcase-sign.png`, and `showcase-item.png` captures use
+a small garden scene with a larger GUI scale for readable examples.
 
 ## Emoji images
 

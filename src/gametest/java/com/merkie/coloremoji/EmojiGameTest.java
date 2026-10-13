@@ -33,6 +33,13 @@ public final class EmojiGameTest implements FabricClientGameTest {
 
     @Override
     public void runTest(ClientGameTestContext context) {
+        context.runOnClient(client -> {
+            client.getWindow().setWindowed(1280, 720);
+            client.options.guiScale().set(3);
+            client.options.showAutosaveIndicator().set(false);
+        });
+        context.waitTicks(2);
+        context.runOnClient(client -> client.resizeGui());
         try (var world = context.worldBuilder().create()) {
             world.getConnection().waitForChunksRender();
             context.runOnClient(client -> {
@@ -88,6 +95,7 @@ public final class EmojiGameTest implements FabricClientGameTest {
                 client.gui.setScreen(null);
                 require(SIGN.equals(sentSign), "Saved sign text keeps its original Unicode");
             });
+            Showcase.capture(context, world);
         }
         LoggerFactory.getLogger("color-emoji-test").info("PASS: Color Emoji renders single emoji and sequences, "
                 + "chat, signs, and named-item tooltips in color; sent chat and sign text keep their original Unicode.");
