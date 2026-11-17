@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.ClientGameTestContext;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.font.TextRenderable;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.SignEditScreen;
@@ -55,6 +56,7 @@ public final class EmojiGameTest implements FabricClientGameTest {
                         "An emoji sits between letters");
                 require(font.width(Component.literal("❤️").withStyle(ChatFormatting.GRAY)) == 9,
                         "Styled hearts measure as one emoji");
+                requireOutline(font);
                 var supported = ColorEmoji.addTo(java.util.List.of());
                 require(supported.isEmpty(), "A font with no Unicode fallback is left alone");
                 StringBuilder rebuilt = new StringBuilder();
@@ -128,6 +130,22 @@ public final class EmojiGameTest implements FabricClientGameTest {
             graphics.item(tool, 24, 128);
             graphics.setTooltipForNextFrame(font, tool, 48, 128);
         }
+    }
+
+    /** A glowing sign's outline is its text eight more times: each letter eight times, an emoji not at all. */
+    private static void requireOutline(Font font) {
+        int[] letters = {0};
+        Font.PreparedText outline = font.prepare8xTextOutline(Component.literal("a♠️b").getVisualOrderText(), 0, 0, 0xFF000000);
+        outline.visit(new Font.GlyphVisitor() {
+            @Override
+            public void acceptGlyph(TextRenderable.Styled glyph) {
+                letters[0]++;
+            }
+        });
+        require(letters[0] == 16, "A glowing sign outlines its letters and not its emoji: " + letters[0]);
+        int plain = font.prepare8xTextOutline(Component.literal("ab").getVisualOrderText(), 0, 0, 0xFF000000).bounds().width();
+        require(outline.bounds().width() == plain + 9, "A glowing sign's outline stays under its letters after an emoji: "
+                + outline.bounds().width() + " vs " + plain);
     }
 
     private static int yellowPixels(Path screenshot) {

@@ -26,4 +26,12 @@ abstract class FontMixin {
                                                    Operation<Boolean> original) {
         return ColorEmoji.collapse(output, sink -> original.call(text, sink));
     }
+
+    /** A glowing sign's outline lays its text out itself, not through prepareText. */
+    @WrapOperation(method = "prepare8xTextOutline",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/util/FormattedCharSequence;accept(Lnet/minecraft/util/FormattedCharSink;)Z"))
+    private boolean colorEmoji$emojiInOutline(FormattedCharSequence text, FormattedCharSink output,
+                                                 Operation<Boolean> original) {
+        return ColorEmoji.outline(output, sink -> original.call(text, sink));
+    }
 }

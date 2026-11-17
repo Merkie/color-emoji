@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "color-emoji-test",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "environment": "client",
   "entrypoints": {
     "fabric-client-gametest": ["com.merkie.coloremoji.EmojiGameTest"]

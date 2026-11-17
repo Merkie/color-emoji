@@ -17,7 +17,7 @@ and item names keep their original Unicode characters.
 ## Install
 
 1. Use Minecraft **26.2**, Java **25**, and Fabric Loader **0.19.3 or newer**.
-2. Download `color-emoji-1.0.0+26.2.jar` from [Releases](https://github.com/Merkie/color-emoji/releases).
+2. Download `color-emoji-1.0.1+26.2.jar` from [Releases](https://github.com/Merkie/color-emoji/releases).
 3. Put it in your Minecraft instance's `mods` folder and restart the game.
 
 Color Emoji is active automatically. Fabric API and server installation are
@@ -44,7 +44,7 @@ On Linux, run client tests with `xvfb-run -a`. On macOS, the test window stays
 hidden and muted. Tests create disposable local worlds and exercise emoji
 widths, unchanged text, chat, sign editing, and named-item tooltips.
 
-The installable JAR is `build/libs/color-emoji-1.0.0+26.2.jar`. The
+The installable JAR is `build/libs/color-emoji-1.0.1+26.2.jar`. The
 `-sources.jar` is for development. Fabric API is used only by the test harness.
 Screenshots are saved under `build/run/clientGameTest/screenshots/`. The
 `showcase-chat.png`, `showcase-sign.png`, and `showcase-item.png` captures use

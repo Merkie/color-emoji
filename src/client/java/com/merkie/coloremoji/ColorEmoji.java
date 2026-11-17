@@ -51,6 +51,8 @@ public final class ColorEmoji {
     private static final int[] INVISIBLE_CODE_POINTS = {0xFE0E, 0xFE0F, 0x200D};
     private static final GlyphProvider PROVIDER = new Provider();
     private static Index index;
+    /** Set while a glowing sign's outline is laid out. */
+    private static boolean outlining;
 
     private ColorEmoji() {}
 
@@ -69,6 +71,19 @@ public final class ColorEmoji {
     public static boolean collapse(FormattedCharSink output, Predicate<FormattedCharSink> text) {
         Sequences sequences = new Sequences(output, index().sequences);
         return text.test(sequences) && sequences.finish();
+    }
+
+    /**
+     * Runs a glowing sign's {@code text} into its outline. Minecraft draws the text eight more times around itself in
+     * the outline color; an emoji keeps its place in each but draws nothing, so it has no outline, as it has no shadow.
+     */
+    public static boolean outline(FormattedCharSink output, Predicate<FormattedCharSink> text) {
+        outlining = true;
+        try {
+            return collapse(output, text);
+        } finally {
+            outlining = false;
+        }
     }
 
     /** What emoji.txt lists: the PNG for each code point, and the sequences that become one code point. */
@@ -212,7 +227,7 @@ public final class ColorEmoji {
         }
     }
 
-    /** Draws in the emoji's own colors whatever the text color, and without shadow, bold, or italics. */
+    /** Draws in the emoji's own colors whatever the text color, and without shadow, outline, bold, or italics. */
     private record Colored(BakedGlyph glyph) implements BakedGlyph {
         @Override
         public GlyphInfo info() {
@@ -222,6 +237,7 @@ public final class ColorEmoji {
         @Override
         public TextRenderable.Styled createGlyph(float x, float y, int color, int shadowColor, Style style,
                                                  float boldOffset, float shadowOffset) {
+            if (outlining) return null;
             Style plain = style.isBold() || style.isItalic() ? style.withBold(false).withItalic(false) : style;
             return glyph.createGlyph(x, y, ARGB.white(ARGB.alpha(color)), 0, plain, 0, 0);
         }
